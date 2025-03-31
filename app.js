@@ -6,10 +6,10 @@ const port = 3001;
 app.use('public/',express.static('public'));
 
 app.get('/', (req, res) => {
-  res.send('Welcome to my REST API!');
+  res.send('Hello World!');
 });
 
-app.get('/api/v1/cat', (req, res) => {
+app.get('/assignment1/v1/cat', (req, res) => {
   const cat = {
     cat_id: 246,
     name: 'Kerttu-Liisa',
