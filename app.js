@@ -3,7 +3,7 @@ const hostname = '127.0.0.1'; // tai localhost
 const app = express();
 const port = 3001;
 
-app.use('public/',express.static('public'));
+app.use('/public',express.static('public'));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
