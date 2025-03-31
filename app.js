@@ -1,7 +1,7 @@
 import express from 'express';
 const hostname = '127.0.0.1'; // tai localhost
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use('public/',express.static('public'));
 
