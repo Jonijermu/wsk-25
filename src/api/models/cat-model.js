@@ -1,4 +1,5 @@
 // mock data
+
 const catItems = [
   {
     cat_id: 9592,
@@ -29,8 +30,23 @@ const findCatById = (id) => {
 const addCat = (cat) => {
   const {cat_name, weight, owner, filename, birthdate} = cat;
   const newId = catItems[0].cat_id + 1;
-  catItems.unshift({cat_id: newId, cat_name, weight, owner, filename, birthdate});
+  catItems.unshift(
+    {cat_id: newId, cat_name, weight, owner, filename, birthdate});
   return {cat_id: newId};
 };
 
-export {listAllCats, findCatById, addCat};
+const deleteCatById = (id) => {
+  const cat = catItems.find((item) => item.cat_id === id);
+  const index = catItems.findIndex((item) => item.cat_id === id);
+  if (index !== -1) {
+    catItems.splice(index, 1);
+    return cat;
+  }
+  return false;
+};
+
+const updateCat = (cat) => {
+
+};
+
+export {listAllCats, findCatById, addCat, deleteCatById, updateCat};
