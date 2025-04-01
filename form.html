@@ -8,9 +8,12 @@
   <title>Picture upload test</title>
 </head>
 <body>
-<form method="POST" action="http://localhost:3000/api/v1/cats" enctype="multipart/form-data">
+<form method="POST"
+      action="http://localhost:3000/api/v1/cats"
+      enctype="multipart/form-data"
+>
   <input type="text" name="cat_name">
-  <input type="file" name="kissa">
+  <input type="file" name="file">
   <button type="submit">lähetä kissa</button>
 </form>
 </body>
