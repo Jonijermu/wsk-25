@@ -12,7 +12,7 @@ import createThumbnail from "../../middlewares.js";
 
 const catRouter = express.Router();
 
-const upload = multer({dest: 'uploads/c'});
+const upload = multer({dest: 'uploads/'});
 
 catRouter.route('/').get(getCat).post(upload.single('file'), createThumbnail, postCat);
 
