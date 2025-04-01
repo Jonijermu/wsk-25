@@ -7,9 +7,13 @@ import {
   deleteCat,
 } from '../controllers/cat-controller.js';
 
+import multer from 'multer';
+
 const catRouter = express.Router();
 
-catRouter.route('/').get(getCat).post(postCat);
+const upload = multer({dest: 'uploads/c'});
+
+catRouter.route('/').get(getCat).post(upload.single('file'),postCat);
 
 catRouter.route('/:id').get(getCatById).put(putCat).delete(deleteCat);
 
