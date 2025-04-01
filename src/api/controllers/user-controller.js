@@ -1,4 +1,10 @@
-import {listAllUsers, findUserById, addUser} from "../models/user-model.js"
+import {
+  addUser,
+  deleteUserById,
+  findUserById,
+  listAllUsers,
+  updateUser
+} from "../models/user-model.js"
 
 const getUser = (req, res) => {
   res.json(listAllUsers())
@@ -13,7 +19,6 @@ const getUserById = (req, res) => {
   }
 };
 
-
 const postUser = (req, res) => {
   const result = addUser(req.body);
   if (result.user_id) {
@@ -24,4 +29,26 @@ const postUser = (req, res) => {
   }
 };
 
-export {getUser, getUserById, postUser}
+const deleteUser = (req, res) => {
+  const user = deleteUserById(parseInt(req.params.id), 10);
+  if (user.user_id) {
+    res.status(201);
+    res.json({message: 'User item deleted.'})
+  } else {
+    res.sendStatus(404)
+  }
+}
+
+const putUser = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const newData = {user_id: id, ...req.body};
+  const user = updateUser(newData);
+  if (user) {
+    res.status(201);
+    res.json({message: 'User item updated'})
+  } else {
+    res.sendStatus(404)
+  }
+}
+
+export {getUser, getUserById, postUser, deleteUser, putUser}

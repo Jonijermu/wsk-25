@@ -25,4 +25,21 @@ const addUser = (user) => {
   return {user_id: newId};
 };
 
-export {listAllUsers, findUserById, addUser};
+const deleteUserById = (id) => {
+  const user = userItems.find((item) => item.user_id === id);
+  const index = userItems.findIndex((item) => item.user_id === id);
+  if (index !== 1) {
+    userItems.splice(index, 1);
+    return user
+  }
+}
+
+const updateUser = (user) => {
+  const updatedUser = userItems.find((item) => item.user_id === user.user_id);
+  if (updatedUser) {
+    Object.assign(updatedUser, user)
+    return updatedUser;
+  }
+}
+
+export {listAllUsers, findUserById, addUser, deleteUserById, updateUser};

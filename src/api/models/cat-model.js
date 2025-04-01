@@ -46,7 +46,10 @@ const deleteCatById = (id) => {
 };
 
 const updateCat = (cat) => {
-
-};
+  const updatedCat = catItems.find((item) => item.cat_id === cat.cat_id);
+  if (updatedCat) {
+    Object.assign(updatedCat, cat);
+    return updatedCat;
+}};
 
 export {listAllCats, findCatById, addCat, deleteCatById, updateCat};
