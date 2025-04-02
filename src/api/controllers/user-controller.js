@@ -1,17 +1,19 @@
 import {
-  addUser,
-  deleteUserById,
-  findUserById,
   listAllUsers,
-  updateUser
-} from "../models/user-model.js"
+  findUserById,
+  addUser,
+  modifyUser,
+  removeUser,
+} from '../models/user-model.js';
 
-const getUser = (req, res) => {
-  res.json(listAllUsers())
-}
+import bcrypt from 'bcrypt';
 
-const getUserById = (req, res) => {
-  const user = findUserById(parseInt(req.params.id, 10));
+const getUser = async (req, res) => {
+  res.json(await listAllUsers());
+};
+
+const getUserById = async (req, res) => {
+  const user = await findUserById(req.params.id);
   if (user) {
     res.json(user);
   } else {
@@ -19,36 +21,34 @@ const getUserById = (req, res) => {
   }
 };
 
-const postUser = (req, res) => {
-  const result = addUser(req.body);
+const postUser = async (req, res) => {
+  req.body.password = bcrypt.hashSync(req.body.password,10)
+  const result = await addUser(req.body);
   if (result.user_id) {
     res.status(201);
-    res.json({message: 'New user added.', result});
+    res.json(result);
+  } else {
+    res.sendStatus(400);
+  }
+};
+const putUser = async (req, res) => {
+  const result = await modifyUser(req.body, req.params.id);
+  if (result.message) {
+    res.status(200);
+    res.json(result);
   } else {
     res.sendStatus(400);
   }
 };
 
-const deleteUser = (req, res) => {
-  const user = deleteUserById(parseInt(req.params.id), 10);
-  if (user.user_id) {
-    res.status(201);
-    res.json({message: 'User item deleted.'})
+const deleteUser = async (req, res) => {
+  const result = await removeUser(req.params.id);
+  if (result.message) {
+    res.status(200);
+    res.json(result);
   } else {
-    res.sendStatus(404)
+    res.sendStatus(400);
   }
-}
+};
 
-const putUser = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const newData = {user_id: id, ...req.body};
-  const user = updateUser(newData);
-  if (user) {
-    res.status(201);
-    res.json({message: 'User item updated'})
-  } else {
-    res.sendStatus(404)
-  }
-}
-
-export {getUser, getUserById, postUser, deleteUser, putUser}
+export {getUser, getUserById, postUser, putUser, deleteUser};
