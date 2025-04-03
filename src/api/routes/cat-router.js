@@ -9,7 +9,7 @@ import {
 } from '../controllers/cat-controller.js';
 
 import multer from 'multer';
-import createThumbnail from "../../middlewares.js";
+import {createThumbnail} from "../../middlewares.js";
 
 const catRouter = express.Router();
 
