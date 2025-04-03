@@ -1,17 +1,18 @@
 import {
   addCat,
-  deleteCatById,
   findCatById,
   listAllCats,
-  updateCat
-} from "../models/cat-model.js";
+  modifyCat,
+  removeCat,
+  findCatByOwnerId,
+} from '../models/cat-model.js';
 
-const getCat = (req, res) => {
-  res.json(listAllCats());
+const getCat = async (req, res) => {
+  res.json(await listAllCats());
 };
 
-const getCatById = (req, res) => {
-  const cat = findCatById(parseInt(req.params.id, 10));
+const getCatById = async (req, res) => {
+  const cat = await findCatById(req.params.id);
   if (cat) {
     res.json(cat);
   } else {
@@ -19,35 +20,48 @@ const getCatById = (req, res) => {
   }
 };
 
-const postCat = (req, res) => {
-  const result = addCat(req.body);
+const postCat = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "File is missing" });
+  }
+  req.body.filename = req.file.filename;
+  const result = await addCat(req.body);
   if (result.cat_id) {
     res.status(201);
-    res.json({message: 'New cat added.', result});
+    res.json(result);
   } else {
     res.sendStatus(400);
   }
 };
 
-const deleteCat = (req, res) => {
-  const cat = deleteCatById(parseInt(req.params.id, 10));
-  if (cat) {
-    res.json({message: 'Cat item deleted.'});
+const putCat = async (req, res) => {
+  const result = await modifyCat(req.body, req.params.id);
+  if (result.message) {
+    res.status(200);
+    res.json(result);
   } else {
     res.sendStatus(404);
   }
 };
 
-const putCat = (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const updatedData = { cat_id: id, ...req.body };
-  const cat = updateCat(updatedData);
-  if (cat) {
-    res.status(201);
-    res.json({message: 'Cat item updated.'});
+const deleteCat = async (req, res) => {
+  const result = await removeCat(req.params.id);
+  if (result.message) {
+    res.status(200);
+    res.json(result);
   } else {
-    res.sendStatus(400);
+    res.sendStatus(404);
   }
 };
 
-export {getCat, getCatById, postCat, putCat, deleteCat};
+const getCatByOwnerId = async (req, res) => {
+  const result = await findCatByOwnerId(req.params.id);
+  console.log(result)
+  if (result) {
+    res.json(result);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+export {getCat, getCatById, postCat, putCat, deleteCat, getCatByOwnerId};

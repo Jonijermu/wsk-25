@@ -1,7 +1,6 @@
 import sharp from 'sharp';
 
 const createThumbnail = async (req, res, next) => {
-  console.log('todo: tee kuvakäsittely', req.file);
   if (!req.file) {
     next();
     return;
