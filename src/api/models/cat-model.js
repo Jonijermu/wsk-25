@@ -4,13 +4,22 @@ import promisePool from '../../utils/database.js';
 
 
 const listAllCats = async () => {
-  const [rows] = await promisePool.query('SELECT * FROM wsk_cats');
+  const [rows] = await promisePool.query(`SELECT wsk_cats.*, wsk_users.name
+    AS owner_name
+    FROM wsk_cats
+    INNER JOIN wsk_users
+    ON wsk_cats.owner = wsk_users.user_id; `);
   console.log('rows', rows);
   return rows;
 };
 
 const findCatById = async (id) => {
-  const [rows] = await promisePool.execute('SELECT * FROM wsk_cats WHERE cat_id = ?', [id]);
+  const [rows] = await promisePool.execute(`SELECT wsk_cats.*, wsk_users.name
+      AS owner_name FROM wsk_cats
+      INNER JOIN wsk_users
+      ON wsk_cats.owner = wsk_users.user_id
+      WHERE cat_id = ?;`, [id]);
+
   console.log('rows', rows);
   if (rows.length === 0) {
     return false;
@@ -32,7 +41,9 @@ const addCat = async (cat) => {
 };
 
 const modifyCat = async (cat, id) => {
-  const sql = promisePool.format(`UPDATE wsk_cats SET ? WHERE cat_id = ?`, [cat, id]);
+  const sql = promisePool.format(`UPDATE wsk_cats SET ?
+                WHERE cat_id = ?`, [cat, id]);
+
   const rows = await promisePool.execute(sql);
   console.log('rows', rows);
   if (rows[0].affectedRows === 0) {
@@ -42,7 +53,8 @@ const modifyCat = async (cat, id) => {
 };
 
 const removeCat = async (id) => {
-  const [rows] = await promisePool.execute('DELETE FROM wsk_cats WHERE cat_id = ?', [id]);
+  const [rows] = await promisePool.execute(`DELETE FROM wsk_cats
+       WHERE cat_id = ?`, [id]);
   console.log('rows', rows);
   if (rows.affectedRows === 0) {
     return false;
@@ -50,4 +62,14 @@ const removeCat = async (id) => {
   return {message: 'success'};
 }
 
-export {listAllCats, findCatById, addCat, modifyCat, removeCat};
+const findCatByOwnerId = async (id) => {
+  const [rows] =  await  promisePool.execute(`SELECT * FROM wsk_cats
+         WHERE owner = ?`, [id]);
+  console.log('rows', rows);
+  if (rows.length === 0) {
+    return false;
+  }
+  return rows[0];
+}
+
+export {listAllCats, findCatById, addCat, modifyCat, removeCat, findCatByOwnerId};

@@ -5,6 +5,7 @@ import {
   getCatById,
   postCat,
   putCat,
+  getCatByOwnerId
 } from '../controllers/cat-controller.js';
 
 import multer from 'multer';
@@ -18,7 +19,7 @@ catRouter.route('/').get(getCat).post(upload.single('file'), createThumbnail, po
 
 catRouter.route('/:id').get(getCatById).put(putCat).delete(deleteCat);
 
-// TODO: Implement this route
-//catRouter.route('/owner/:id').get();
+//TODO: Implement this route
+catRouter.route('/owner/:id').get(getCatByOwnerId);
 
 export default catRouter;
