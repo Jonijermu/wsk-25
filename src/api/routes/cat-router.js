@@ -19,7 +19,6 @@ catRouter.route('/').get(getCat).post(upload.single('file'), createThumbnail, po
 
 catRouter.route('/:id').get(getCatById).put(putCat).delete(deleteCat);
 
-//TODO: Implement this route
 catRouter.route('/owner/:id').get(getCatByOwnerId);
 
 export default catRouter;
