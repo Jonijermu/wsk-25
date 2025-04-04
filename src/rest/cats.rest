@@ -1,0 +1,23 @@
+### gets all the cats and owners
+GET http://localhost:3000/api/v1/cats/
+
+### gets specific cat
+GET http://localhost:3000/api/v1/cats/41
+
+### modify cat (Needs authorization)
+PUT http://localhost:3000/api/v1/cats/41
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3NywibmFtZSI6IkpvbmkiLCJ1c2VybmFtZSI6IkpvbmkiLCJlbWFpbCI6ImpvbmlAcHLDtsO2dC5maSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQzNzg2NTMxLCJleHAiOjE3NDM4NzI5MzF9.YOUyZl-36shhhBXPwxGpXgvgZlyNMDlcoa6hhHBDQe4
+
+{
+  "cat_name": "Mara"
+}
+
+### Delete  cat (Remember to  aadd id after /cats/)
+DEL http://127.0.0.1:3000/api/v1/cats/
+Content-Type: application/json
+Authorization: Bearer
+
+
+
+
