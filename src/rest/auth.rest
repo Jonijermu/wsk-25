@@ -1,0 +1,16 @@
+### Post login
+POST http://localhost:3000/api/v1/auth/login
+content-type: application/json
+
+{
+  "username": "pekka",
+  "password": "1234"
+}
+
+### Get my user info
+GET http://localhost:3000/api/v1/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3NywibmFtZSI6IkpvbmkiLCJ1c2VybmFtZSI6IkpvbmkiLCJlbWFpbCI6ImpvbmlAcHLDtsO2dC5maSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQzNzg2NTMxLCJleHAiOjE3NDM4NzI5MzF9.YOUyZl-36shhhBXPwxGpXgvgZlyNMDlcoa6hhHBDQe4
+
+
+
+
