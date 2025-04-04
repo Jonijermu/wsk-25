@@ -9,4 +9,14 @@ content-type: application/json
 
 ### Get my user info
 GET http://localhost:3000/api/v1/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MSwibmFtZSI6ImpvbmkiLCJ1c2VybmFtZSI6ImpvbnNwYSIsImVtYWlsIjoiam9uaWhlaWtraWxhQGhvdG1haWwuZmkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MzY4NTYzMCwiZXhwIjoxNzQzNzcyMDMwfQ.EZOkV8Gxis_-sR-w9n2rQeYHRYJVPQ0Pocsw_EaNE8Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MSwibmFtZSI6ImpvbmkiLCJ1c2VybmFtZSI6ImpvbnNwYSIsImVtYWlsIjoiam9uaWhlaWtraWxhQGhvdG1haWwuZmkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MzcwODkwNSwiZXhwIjoxNzQzNzk1MzA1fQ.RavCrWtxJDo8z788VmkGU4pMdurYzgT9Nxp5j4MjbVg
+
+
+### Get my user info
+PUT http://localhost:3000/api/v1/cats/51
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MSwibmFtZSI6ImpvbmkiLCJ1c2VybmFtZSI6ImpvbnNwYSIsImVtYWlsIjoiam9uaWhlaWtraWxhQGhvdG1haWwuZmkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MzcwODkwNSwiZXhwIjoxNzQzNzk1MzA1fQ.RavCrWtxJDo8z788VmkGU4pMdurYzgT9Nxp5j4MjbVg
+
+{
+  "cat_name": "Mara"
+}
+
