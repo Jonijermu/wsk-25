@@ -21,9 +21,6 @@ const getCatById = async (req, res) => {
 };
 
 const postCat = async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "File is missing" });
-  }
   req.body.filename = req.file.filename;
   const result = await addCat(req.body);
   if (result.cat_id) {
@@ -35,9 +32,9 @@ const postCat = async (req, res) => {
 };
 
 const putCat = async (req, res) => {
-  const result = await modifyCat(req.body, req.params.id);
+  const result = await modifyCat(req.body, req.params.id, res.locals.user);
   if (result.message) {
-    res.status(200);
+    res.status(200)
     res.json(result);
   } else {
     res.sendStatus(404);
@@ -45,12 +42,12 @@ const putCat = async (req, res) => {
 };
 
 const deleteCat = async (req, res) => {
-  const result = await removeCat(req.params.id);
+  const result = await removeCat(req.params.id, res.locals.user);
   if (result.message) {
     res.status(200);
     res.json(result);
   } else {
-    res.sendStatus(404);
+    res.sendStatus(403);
   }
 };
 

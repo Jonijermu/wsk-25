@@ -1,0 +1,50 @@
+### gets all the users
+GET http://127.0.0.1:3000/api/v1/users
+
+### gets specific user
+GET http://127.0.0.1:3000/api/v1/users/37
+
+### Add user
+POST http://127.0.0.1:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "Joni",
+  "username": "Joni",
+  "password": "1234",
+  "email": "joni@prööt.fi",
+  "role": "user"
+}
+
+### Add admin  user
+POST http://127.0.0.1:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "pekka",
+  "username": "pekka",
+  "password": "1234",
+  "email": "pekka@prööt.fi",
+  "role": "admin"
+}
+
+### update  user
+PUT http://localhost:3000/api/v1/users/73
+Content-Type: application/json
+Authorization: Bearer
+
+{
+    "username": "kalle",
+    "name": "kalle"
+}
+
+
+### Delete  user (Remember to  aadd id after  /users/)
+DEL http://127.0.0.1:3000/api/v1/users/
+Content-Type: application/json
+Authorization: Bearer
+
+
+
+
+
