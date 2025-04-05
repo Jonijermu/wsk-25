@@ -77,16 +77,17 @@ const deleteUserById = async (id) => {
 
 const modifyUser = async (user, id) => {
   const sql = promisePool.format(`
-                    UPDATE wsk_users SET ?
-                    WHERE user_id =  ?`,
-             [user, id]);
+      UPDATE wsk_users
+      SET ?
+      WHERE user_id = ?`,
+    [user, id]);
 
   const rows = await promisePool.execute(sql);
   console.log('row', rows);
   if (rows[0].affectedRows === 0) {
     return false;
   }
-  return rows[0]
+  return rows[0];
 }
 
 

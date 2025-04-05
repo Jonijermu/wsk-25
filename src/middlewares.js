@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import jwt from 'jsonwebtoken';
-import multer from "multer";
-import {validationResult} from "express-validator";
+import multer from 'multer';
+import {validationResult} from 'express-validator';
 
 const createThumbnail = async (req, res, next) => {
   if (!req.file) {
@@ -49,8 +49,8 @@ const errorHandler = (err, req, res, next) => {
   res.json({
     error: {
       message: err.message,
-      status: err.status || 500
-    }
+      status: err.status || 500,
+    },
   });
 };
 
@@ -85,7 +85,9 @@ const upload = multer({
       cb(error, false);
     }
   },
-})
+});
 
-export {createThumbnail, authenticateToken,
-  notFoundHandler, errorHandler,validationErrors ,upload};
+export {
+  createThumbnail, authenticateToken,
+  notFoundHandler, errorHandler, validationErrors, upload,
+};
