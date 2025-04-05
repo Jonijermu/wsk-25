@@ -7,6 +7,8 @@ import {
 } from "../models/user-model.js";
 
 import bcrypt from "bcrypt";
+import {validationResult} from 'express-validator';
+
 
 const getUser = async (req, res) => {
   const users = await listAllUsers();
@@ -22,42 +24,51 @@ const getUserById = async (req, res) => {
   }
 };
 
-const postUser = async (req, res) => {
-  console.log(req.body)
-  req.body.password  =  bcrypt.hashSync(req.body.password,  10);
+const postUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Invalid or missing fields');
+    error.status = 400;
+    return next(error);
+  }
+  req.body.password = bcrypt.hashSync(req.body.password, 10);
   const result = await addUser(req.body);
-  if (result.user_id) {
-    res.status(201);
-    res.json(result);
+  res.status(201);
+  res.json({message: "new user  Added", user_id: result.user_id});
+
+};
+
+const deleteUser = async (req, res, next) => {
+  if (res.locals.user.user_id !== Number(req.params.id) && res.locals.user.role !== "admin") {
+    const error = new Error("Don't have access");
+    error.status = 403;
+    return next(error);
+  }
+  const user = await deleteUserById(req.params.id);
+  if (user.message) {
+    res.status(200).json({ message: 'User deleted successfully', user: user });
+
   } else {
-    res.sendStatus(400);
+    res.sendStatus(404);
   }
 };
 
-const deleteUser = async (req, res) => {
-  console.log(res.locals.user.user_id)
-  if (res.locals.user.user_id === Number(req.params.id) || res.locals.user.role === "admin") {
-    const user = await deleteUserById(req.params.id);
-    if (user.message) {
-      res.status(200);
-      res.json({user});
-    } else {
-      res.sendStatus(403);
-    }
-  } else {
-    res.sendStatus(403)
+const putUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Invalid or missing fields');
+    error.status = 400;
+    return next(error);
   }
-};
-
-const putUser = async (req, res) => {
-  if (res.locals.user.user_id === Number(req.params.id) || res.locals.user.role === "admin") {
-    const user = await modifyUser(req.body, req.params.id);
-    if (user.message) {
-      res.status(200);
-      res.json(user);
-    } else {
-      res.sendStatus(403);
-    }
+  if (res.locals.user.user_id !== Number(req.params.id) && res.locals.user.role !== "admin") {
+    const error = new Error("Don't have access");
+    error.status = 403;
+    return next(error);
+  }
+  const user = await modifyUser(req.body, req.params.id);
+  if (user) {
+    res.status(200);
+    res.json({message: 'User updated successfully'});
   } else {
     res.sendStatus(403);
   }
