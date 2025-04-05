@@ -86,7 +86,7 @@ const modifyUser = async (user, id) => {
   if (rows[0].affectedRows === 0) {
     return false;
   }
-  return {message: 'User updated successfully'}
+  return rows[0]
 }
 
 

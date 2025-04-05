@@ -20,7 +20,13 @@ const getCatById = async (req, res) => {
   }
 };
 
-const postCat = async (req, res) => {
+const postCat = async (req, res, next) => {
+  if (!req.file) {
+
+    const error = new Error('Invalid or missing file');
+    error.status = 400;
+    next(error);
+  }
   req.body.filename = req.file.filename;
   const result = await addCat(req.body);
   if (result.cat_id) {
